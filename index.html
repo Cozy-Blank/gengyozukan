@@ -11,15 +11,40 @@
   <!-- 偏愛Toolシリーズ：言魚図鑑ヘッダー -->
   <header class="henai-header">
     <div class="hero-image-wrapper">
-      <img src="henai-fish.png" alt="言魚図鑑" class="hero-img">
+      <!-- 送ってくれた画像アドレスを直貼りしたよ！ -->
+      <img src="https://github.com/Cozy-Blank/gengyozukan/blob/main/%E5%81%8F%E6%84%9B%E9%AD%9A.png?raw=true" alt="言魚図鑑" class="hero-img">
     </div>
     <h1 class="app-title">言魚図鑑</h1>
     <p class="app-subtitle">〜 偏愛Tool 〜</p>
   </header>
 
-  <main class="container">
-    <!-- ここに言葉の登録フォームやタグ検索が入るよ -->
-  </main>
+  <!-- 言葉の入力フォーム -->
+  <section class="input-form">
+    <h2>言魚（言葉）を釣る</h2>
+    <input type="text" id="word-input" placeholder="釣った言葉（例：傀儡）">
+    <input type="text" id="reading-input" placeholder="読み（例：かいらい）">
+    <textarea id="meaning-input" placeholder="意味やメモ"></textarea>
+    <input type="url" id="link-input" placeholder="参照リンクURL">
 
+    <!-- タグ入力エリア -->
+    <div class="tag-input-area">
+      <input type="text" id="tag-input" placeholder="タグを入力してEnter（例：文学, 歴史）">
+      <div id="selected-tags" class="tag-container"></div>
+    </div>
+
+    <button type="button" id="save-btn">ノートに保存する</button>
+  </section>
+
+  <!-- 検索＆タグフィルターエリア -->
+  <section class="search-section">
+    <input type="text" id="search-input" placeholder="言葉や読みで検索...">
+    
+    <div class="filter-title">ジャンルで絞り込む：</div>
+    <div id="filter-tags" class="tag-container">
+      <span class="tag filter-tag active" data-tag="all">すべて</span>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
 </body>
 </html>
