@@ -4,14 +4,134 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>言魚図鑑 | 偏愛Tool</title>
+  <!-- この下の行でCSSを読み込んでいるよ！ -->
   <link rel="stylesheet" href="style.css">
-</head>
+</head>:root {
+  --bg-color: #0d1b2a;       /* 深海ダークネイビー */
+  --card-bg: #1b263b;      /* カード背景 */
+  --accent-gold: #c5a059;   /* アンティークゴールド */
+  --text-main: #e0e1dd;     /* ライトグレー */
+  --border-color: #415a77;  /* 枠線色 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+  margin: 0;
+  padding: 16px;
+  max-width: 480px; /* スマホ画面に最適化 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ヘッダー＆画像エリア */
+.henai-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.hero-image-wrapper {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.app-title {
+  color: var(--accent-gold);
+  font-size: 1.8rem;
+  margin: 16px 0 4px 0;
+  letter-spacing: 0.05em;
+}
+
+.app-subtitle {
+  color: var(--text-main);
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* フォーム・入力要素 */
+.input-form, .search-section {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+h2, .filter-title {
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+input, textarea, button {
+  width: 100%;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+button {
+  background-color: var(--accent-gold);
+  color: var(--bg-color);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+/* タグスタイル */
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background-color: rgba(197, 160, 89, 0.15);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-tag.active {
+  background-color: var(--accent-gold);
+  color: var(--bg-color);
+}
 <body>
 
   <!-- 偏愛Toolシリーズ：言魚図鑑ヘッダー -->
   <header class="henai-header">
     <div class="hero-image-wrapper">
-      <!-- 送ってくれた画像アドレスを直貼りしたよ！ -->
       <img src="https://github.com/Cozy-Blank/gengyozukan/blob/main/%E5%81%8F%E6%84%9B%E9%AD%9A.png?raw=true" alt="言魚図鑑" class="hero-img">
     </div>
     <h1 class="app-title">言魚図鑑</h1>
