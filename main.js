@@ -16,6 +16,14 @@ const searchInput = document.getElementById('search-input');
 const filterTagsContainer = document.getElementById('filter-tags');
 const wordListContainer = document.getElementById('word-list');
 
+// ひらがなをカタカナに変換する便利関数
+function hiraToKata(str) {
+  return str.replace(/[\u3041-\u3096]/g, function(match) {
+    var chr = match.charCodeAt(0) + 0x60;
+    return String.fromCharCode(chr);
+  });
+}
+
 // 1. タグ追加処理
 function addTag() {
   if (!tagInput) return;
@@ -87,7 +95,7 @@ if (saveBtn) {
     words.unshift(newWord);
     localStorage.setItem('gengyo_words', JSON.stringify(words));
 
-    // フォームのリセット（入力文字と選択中タグをクリア）
+    // フォームのリセット
     wordInput.value = '';
     readingInput.value = '';
     meaningInput.value = '';
@@ -146,21 +154,31 @@ function updateFilterTags() {
   });
 }
 
-// 4. 言葉カードの描画
+// 4. 言葉カードの描画（ひらがな・カタカナ両対応のうろ覚え検索）
 function renderWords() {
   if (!wordListContainer) return;
   wordListContainer.innerHTML = '';
   const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  const kataKeyword = hiraToKata(keyword); // ひらがなをカタカナに変換した検索ワード
 
   const filteredWords = words.filter(item => {
-    const matchesKeyword = !keyword || 
-      (item.word && item.word.toLowerCase().includes(keyword)) ||
-      (item.reading && item.reading.toLowerCase().includes(keyword)) ||
-      (item.meaning && item.meaning.toLowerCase().includes(keyword));
-    
-    const matchesTag = activeFilterTag === 'all' || (item.tags && item.tags.includes(activeFilterTag));
+    const wordStr = (item.word || '').toLowerCase();
+    const readingStr = (item.reading || '').toLowerCase();
+    const meaningStr = (item.meaning || '').toLowerCase();
 
-    return matchesKeyword && matchesTag;
+    // 言葉・読み・意味・タグの中でヒットするかチェック（ひらがな/カタカナ両対応）
+    const matchesKeyword = !keyword || 
+      wordStr.includes(keyword) || wordStr.includes(kataKeyword) ||
+      readingStr.includes(keyword) || readingStr.includes(kataKeyword) ||
+      meaningStr.includes(keyword) || meaningStr.includes(kataKeyword) ||
+      (item.tags && item.tags.some(t => {
+        const tStr = t.toLowerCase();
+        return tStr.includes(keyword) || tStr.includes(kataKeyword);
+      }));
+    
+    const matchesTagFilter = activeFilterTag === 'all' || (item.tags && item.tags.includes(activeFilterTag));
+
+    return matchesKeyword && matchesTagFilter;
   });
 
   if (filteredWords.length === 0) {
