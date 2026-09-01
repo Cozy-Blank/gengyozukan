@@ -14,24 +14,16 @@ const selectedTagsContainer = document.getElementById('selected-tags');
 const saveBtn = document.getElementById('save-btn');
 const searchInput = document.getElementById('search-input');
 const filterTagsContainer = document.getElementById('filter-tags');
+const wordListContainer = document.getElementById('word-list');
 
-// 表示領域の確保
-let wordListContainer = document.getElementById('word-list');
-if (!wordListContainer) {
-  wordListContainer = document.createElement('section');
-  wordListContainer.id = 'word-list';
-  wordListContainer.className = 'word-list-section';
-  document.body.appendChild(wordListContainer);
-}
-
-// 1. タグ追加処理（ボタンタップ・Enter両対応）
+// 1. タグ追加処理
 function addTag() {
   if (!tagInput) return;
   const tagText = tagInput.value.trim();
   if (tagText && !currentTags.includes(tagText)) {
     currentTags.push(tagText);
     renderInputTags();
-    tagInput.value = ''; // 入力欄をクリア
+    tagInput.value = '';
   }
 }
 
@@ -72,11 +64,15 @@ if (saveBtn) {
     const word = wordInput.value.trim();
     const reading = readingInput.value.trim();
     const meaning = meaningInput.value.trim();
-    const link = linkInput.value.trim();
+    let link = linkInput ? linkInput.value.trim() : '';
 
     if (!word) {
       alert('釣った言葉を入力してください！');
       return;
+    }
+
+    if (link && !link.startsWith('http://') && !link.startsWith('https://')) {
+      link = 'https://' + link;
     }
 
     const newWord = {
@@ -91,11 +87,11 @@ if (saveBtn) {
     words.unshift(newWord);
     localStorage.setItem('gengyo_words', JSON.stringify(words));
 
-    // フォームのリセット（タグ入力欄も完全にクリア）
+    // フォームのリセット（入力文字と選択中タグをクリア）
     wordInput.value = '';
     readingInput.value = '';
     meaningInput.value = '';
-    linkInput.value = '';
+    if (linkInput) linkInput.value = '';
     if (tagInput) tagInput.value = '';
     currentTags = [];
     renderInputTags();
@@ -106,7 +102,7 @@ if (saveBtn) {
   });
 }
 
-// 3. 検索＆フィルター処理（リアルタイム連動）
+// 3. 検索＆フィルター処理
 if (searchInput) {
   searchInput.addEventListener('input', () => {
     renderWords();
@@ -125,7 +121,6 @@ function updateFilterTags() {
 
   filterTagsContainer.innerHTML = '';
 
-  // 「すべて」ボタン
   const allBtn = document.createElement('span');
   allBtn.className = `tag filter-tag ${activeFilterTag === 'all' ? 'active' : ''}`;
   allBtn.textContent = 'すべて';
@@ -137,7 +132,6 @@ function updateFilterTags() {
   });
   filterTagsContainer.appendChild(allBtn);
 
-  // 登録タグボタン
   allTags.forEach(tag => {
     const tagEl = document.createElement('span');
     tagEl.className = `tag filter-tag ${activeFilterTag === tag ? 'active' : ''}`;
@@ -152,19 +146,18 @@ function updateFilterTags() {
   });
 }
 
-// 4. 言葉カードの描画（うろ覚え検索・タグのW絞り込み）
+// 4. 言葉カードの描画
 function renderWords() {
+  if (!wordListContainer) return;
   wordListContainer.innerHTML = '';
   const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
   const filteredWords = words.filter(item => {
-    // 言葉・読み・意味のいずれかに検索キーワードが含まれるか判定
     const matchesKeyword = !keyword || 
       (item.word && item.word.toLowerCase().includes(keyword)) ||
       (item.reading && item.reading.toLowerCase().includes(keyword)) ||
       (item.meaning && item.meaning.toLowerCase().includes(keyword));
     
-    // タグでの絞り込み判定
     const matchesTag = activeFilterTag === 'all' || (item.tags && item.tags.includes(activeFilterTag));
 
     return matchesKeyword && matchesTag;
@@ -185,7 +178,7 @@ function renderWords() {
       : '';
       
     const linkHtml = item.link 
-      ? `<p><a href="${item.link}" target="_blank" style="color:var(--accent-terra); font-weight:bold;">参照リンクを見る</a></p>` 
+      ? `<p style="margin:6px 0;"><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color:var(--accent-terra); font-weight:bold; text-decoration:underline;">🔗 参照リンクを見る</a></p>` 
       : '';
 
     card.innerHTML = `

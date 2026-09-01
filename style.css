@@ -1,11 +1,11 @@
 :root {
-  --bg-color: #DDE2DC;       /* くすんだセージグレー */
-  --card-bg: #F4F6F4;      /* 明るいセージホワイト */
-  --accent-green: #1C312E;  /* ダークエメラルド */
-  --accent-sage: #7B8E85;   /* スモーキーグリーン */
-  --accent-terra: #A64B2A;  /* アンティーク朱赤 */
-  --text-main: #1A2421;     /* ナイトグリーン */
-  --border-color: #B2C0B8;  /* スモーキー枠線 */
+  --bg-color: #E8E1D5;       /* 経年変化したペーパー色 */
+  --card-bg: #F5F0E6;      /* アイボリー */
+  --accent-green: #4A3B32;  /* ダークウッドのブラウン */
+  --accent-sage: #9E9382;   /* クラシックグレージュ */
+  --accent-terra: #B86B3A;  /* アンティークブラス（真鍮色） */
+  --text-main: #241E1A;     /* セピアブラック */
+  --border-color: #BDB2A1;  /* 真鍮調の枠線 */
 }
 
 * {
