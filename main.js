@@ -1,4 +1,4 @@
-// データ保持用の配列（ブラウザのLocalStorageから読み込む）
+// データ保持用の配列（LocalStorageから読み込む）
 let words = JSON.parse(localStorage.getItem('gengyo_words')) || [];
 let currentTags = [];
 let activeFilterTag = 'all';
@@ -9,7 +9,7 @@ const readingInput = document.getElementById('reading-input');
 const meaningInput = document.getElementById('meaning-input');
 const linkInput = document.getElementById('link-input');
 const tagInput = document.getElementById('tag-input');
-const addTagBtn = document.getElementById('add-tag-btn'); // タグ追加ボタン
+const addTagBtn = document.getElementById('add-tag-btn');
 const selectedTagsContainer = document.getElementById('selected-tags');
 const saveBtn = document.getElementById('save-btn');
 const searchInput = document.getElementById('search-input');
@@ -24,23 +24,30 @@ if (!wordListContainer) {
   document.body.appendChild(wordListContainer);
 }
 
-// 1. タグ追加処理（「追加」ボタンタップで動作）
+// 1. タグ追加処理（ボタンタップ・Enter両対応）
 function addTag() {
   if (!tagInput) return;
   const tagText = tagInput.value.trim();
   if (tagText && !currentTags.includes(tagText)) {
     currentTags.push(tagText);
     renderInputTags();
-    tagInput.value = '';
+    tagInput.value = ''; // 入力欄をクリア
   }
 }
 
-// タグ追加ボタンのクリックイベント
 if (addTagBtn) {
   addTagBtn.addEventListener('click', addTag);
 }
 
-// 入力中のタグを描画
+if (tagInput) {
+  tagInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addTag();
+    }
+  });
+}
+
 function renderInputTags() {
   if (!selectedTagsContainer) return;
   selectedTagsContainer.innerHTML = '';
@@ -84,11 +91,12 @@ if (saveBtn) {
     words.unshift(newWord);
     localStorage.setItem('gengyo_words', JSON.stringify(words));
 
-    // フォームのリセット
+    // フォームのリセット（タグ入力欄も完全にクリア）
     wordInput.value = '';
     readingInput.value = '';
     meaningInput.value = '';
     linkInput.value = '';
+    if (tagInput) tagInput.value = '';
     currentTags = [];
     renderInputTags();
 
@@ -98,18 +106,16 @@ if (saveBtn) {
   });
 }
 
-// 3. 検索＆フィルター処理
+// 3. 検索＆フィルター処理（リアルタイム連動）
 if (searchInput) {
   searchInput.addEventListener('input', () => {
     renderWords();
   });
 }
 
-// タグ一覧（フィルターボタン）の更新とクリックイベント設定
 function updateFilterTags() {
   if (!filterTagsContainer) return;
 
-  // 保存されている全言葉からタグを抽出
   const allTags = new Set();
   words.forEach(item => {
     if (item.tags && Array.isArray(item.tags)) {
@@ -119,7 +125,7 @@ function updateFilterTags() {
 
   filterTagsContainer.innerHTML = '';
 
-  // 「すべて」ボタンを作成
+  // 「すべて」ボタン
   const allBtn = document.createElement('span');
   allBtn.className = `tag filter-tag ${activeFilterTag === 'all' ? 'active' : ''}`;
   allBtn.textContent = 'すべて';
@@ -131,7 +137,7 @@ function updateFilterTags() {
   });
   filterTagsContainer.appendChild(allBtn);
 
-  // 登録されているタグボタンを作成
+  // 登録タグボタン
   allTags.forEach(tag => {
     const tagEl = document.createElement('span');
     tagEl.className = `tag filter-tag ${activeFilterTag === tag ? 'active' : ''}`;
@@ -146,16 +152,19 @@ function updateFilterTags() {
   });
 }
 
-// 4. 言葉カードの描画処理
+// 4. 言葉カードの描画（うろ覚え検索・タグのW絞り込み）
 function renderWords() {
   wordListContainer.innerHTML = '';
   const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
   const filteredWords = words.filter(item => {
-    const matchesKeyword = (item.word && item.word.toLowerCase().includes(keyword)) ||
-                           (item.reading && item.reading.toLowerCase().includes(keyword)) ||
-                           (item.meaning && item.meaning.toLowerCase().includes(keyword));
+    // 言葉・読み・意味のいずれかに検索キーワードが含まれるか判定
+    const matchesKeyword = !keyword || 
+      (item.word && item.word.toLowerCase().includes(keyword)) ||
+      (item.reading && item.reading.toLowerCase().includes(keyword)) ||
+      (item.meaning && item.meaning.toLowerCase().includes(keyword));
     
+    // タグでの絞り込み判定
     const matchesTag = activeFilterTag === 'all' || (item.tags && item.tags.includes(activeFilterTag));
 
     return matchesKeyword && matchesTag;
@@ -181,7 +190,7 @@ function renderWords() {
 
     card.innerHTML = `
       <div style="font-size:0.8rem; opacity:0.7;">${item.reading || ''}</div>
-      <h3 style="color:#2D4030; margin:4px 0 8px 0; font-size:1.4rem;">${item.word}</h3>
+      <h3 style="color:var(--accent-green); margin:4px 0 8px 0; font-size:1.4rem;">${item.word}</h3>
       <p style="margin-bottom:8px; line-height:1.4;">${item.meaning || ''}</p>
       ${linkHtml}
       <div class="tag-container" style="margin-top:8px;">${tagsHtml}</div>

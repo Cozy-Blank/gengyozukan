@@ -1,11 +1,11 @@
 :root {
-  --bg-color: #EFE9DC;       /* 全体背景：柔らかな羊皮紙色 */
-  --card-bg: #FAF6EE;      /* カード背景：生成りのアイボリー */
-  --accent-green: #2D4030;  /* メイン色：深いインクグリーン */
-  --accent-sage: #8A9A86;   /* サブ色：落ち着いたセージグリーン */
-  --accent-terra: #8B0000;  /* 差し色：捺印のような渋いテラコッタ */
-  --text-main: #2B2A29;     /* 文字色：墨のような黒 */
-  --border-color: #C8BFB0;  /* 枠線：アンティークな薄茶 */
+  --bg-color: #DDE2DC;       /* くすんだセージグレー */
+  --card-bg: #F4F6F4;      /* 明るいセージホワイト */
+  --accent-green: #1C312E;  /* ダークエメラルド */
+  --accent-sage: #7B8E85;   /* スモーキーグリーン */
+  --accent-terra: #A64B2A;  /* アンティーク朱赤 */
+  --text-main: #1A2421;     /* ナイトグリーン */
+  --border-color: #B2C0B8;  /* スモーキー枠線 */
 }
 
 * {
