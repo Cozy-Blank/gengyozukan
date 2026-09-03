@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const readingInput = document.getElementById('reading-input');
   const meaningInput = document.getElementById('meaning-input');
   const urlInput = document.getElementById('url-input');
-  const tagInput = document.getElementById('tag-input');
   const searchInput = document.getElementById('search-input');
   const wordList = document.getElementById('word-list');
 
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reading: readingInput ? readingInput.value.trim() : '',
         meaning: meaningInput ? meaningInput.value.trim() : '',
         url: urlInput ? urlInput.value.trim() : '',
-        tags: tagInput && tagInput.value ? tagInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '') : [],
         createdAt: new Date().toLocaleDateString('ja-JP')
       };
 
@@ -39,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. リアルタイム検索処理（言葉・読み・メモ・タグから一括検索）
+  // 2. リアルタイム検索処理（言葉・読み・メモから一括検索）
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       const keyword = e.target.value.toLowerCase().trim();
@@ -49,14 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 言葉・読み・意味メモ・タグのいずれかにマッチするか判定
+      // 言葉・読み・意味メモのいずれかにマッチするか判定
       const filteredWords = words.filter(item => {
         const matchWord = item.word && item.word.toLowerCase().includes(keyword);
         const matchReading = item.reading && item.reading.toLowerCase().includes(keyword);
         const matchMeaning = item.meaning && item.meaning.toLowerCase().includes(keyword);
-        const matchTags = item.tags && item.tags.some(tag => tag.toLowerCase().includes(keyword));
 
-        return matchWord || matchReading || matchMeaning || matchTags;
+        return matchWord || matchReading || matchMeaning;
       });
 
       renderWords(filteredWords);
@@ -86,42 +83,66 @@ document.addEventListener('DOMContentLoaded', () => {
         background: var(--card-bg);
         border: 1px solid var(--border-color);
         border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 12px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        transition: transform 0.2s ease, border-color 0.2s ease;
       `;
-
-      // タグのHTML作成
-      const tagsHtml = item.tags && item.tags.length > 0
-        ? `<div style="margin-top: 8px;">${item.tags.map(t => `<span style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin-right: 4px; color: var(--accent-green);">#${t}</span>`).join('')}</div>`
-        : '';
 
       // URLリンクのHTML作成
       const urlHtml = item.url
-        ? `<div style="margin-top: 6px;"><a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: var(--accent-green); font-size: 0.85rem; text-decoration: underline;">🔗 参照リンクを開く</a></div>`
+        ? `<div style="margin-top: 4px;"><a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: var(--accent-green); font-size: 0.8rem; text-decoration: underline;" onclick="event.stopPropagation();">🔗 参照リンクを開く</a></div>`
         : '';
 
+      // 削除ボタンを削り、パディングやマージンも詰めてすっきりコンパクトに！
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
-          <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-main);">${item.word}</h3>
+          <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">${item.word}</h3>
           <span style="font-size: 0.75rem; color: var(--accent-sage);">${item.createdAt}</span>
         </div>
-        ${item.reading ? `<p style="margin: 4px 0 8px 0; font-size: 0.85rem; color: var(--accent-sage);">${item.reading}</p>` : ''}
-        ${item.meaning ? `<p style="margin: 8px 0; font-size: 0.95rem; white-space: pre-wrap;">${item.meaning}</p>` : ''}
+        ${item.reading ? `<p style="margin: 2px 0 6px 0; font-size: 0.8rem; color: var(--accent-sage);">${item.reading}</p>` : ''}
+        ${item.meaning ? `<p style="margin: 4px 0; font-size: 0.9rem; white-space: pre-wrap;">${item.meaning}</p>` : ''}
         ${urlHtml}
-        ${tagsHtml}
-        <button onclick="deleteWord(${item.id})" style="margin-top: 10px; background: transparent; border: none; color: #FF6B6B; font-size: 0.8rem; cursor: pointer; padding: 0;">🗑 削除する</button>
       `;
+
+      // --- 長押し（ロングタップ）判定処理 ---
+      let pressTimer = null;
+
+      const startPress = () => {
+        card.style.transform = 'scale(0.98)';
+        pressTimer = setTimeout(() => {
+          if (confirm(`「${item.word}」を水槽から削除してもよろしいですか？`)) {
+            deleteWord(item.id);
+          }
+          card.style.transform = 'scale(1)';
+        }, 600); // 0.6秒間長押しで発動
+      };
+
+      const cancelPress = () => {
+        clearTimeout(pressTimer);
+        card.style.transform = 'scale(1)';
+      };
+
+      // スマホ（タッチイベント）
+      card.addEventListener('touchstart', startPress, { passive: true });
+      card.addEventListener('touchend', cancelPress);
+      card.addEventListener('touchmove', cancelPress);
+
+      // パソコン（マウスイベント）
+      card.addEventListener('mousedown', startPress);
+      card.addEventListener('mouseup', cancelPress);
+      card.addEventListener('mouseleave', cancelPress);
 
       wordList.appendChild(card);
     });
   }
 
-  // 削除機能をグローバルに登録
-  window.deleteWord = function(id) {
-    if (confirm('この言葉を削除してもよろしいですか？')) {
-      words = words.filter(item => item.id !== id);
-      saveAndRender();
-    }
-  };
+  // 削除機能
+  function deleteWord(id) {
+    words = words.filter(item => item.id !== id);
+    saveAndRender();
+  }
 });
