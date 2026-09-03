@@ -16,26 +16,28 @@ document.addEventListener('DOMContentLoaded', () => {
   renderWords(words);
 
   // 1. フォーム送信（保存処理）
-  wordForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+  if (wordForm) {
+    wordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    const newWord = {
-      id: Date.now(),
-      word: wordInput.value.trim(),
-      reading: readingInput.value.trim(),
-      meaning: meaningInput.value.trim(),
-      url: urlInput.value.trim(),
-      tags: tagInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''),
-      createdAt: new Date().toLocaleDateString('ja-JP')
-    };
+      const newWord = {
+        id: Date.now(),
+        word: wordInput.value.trim(),
+        reading: readingInput ? readingInput.value.trim() : '',
+        meaning: meaningInput ? meaningInput.value.trim() : '',
+        url: urlInput ? urlInput.value.trim() : '',
+        tags: tagInput && tagInput.value ? tagInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '') : [],
+        createdAt: new Date().toLocaleDateString('ja-JP')
+      };
 
-    words.unshift(newWord); // 新しいものを先頭に追加
-    saveAndRender();
+      words.unshift(newWord); // 新しいものを先頭に追加
+      saveAndRender();
 
-    // フォームリセット＆最初の入力欄へフォーカス移動
-    wordForm.reset();
-    wordInput.focus();
-  });
+      // フォームリセット＆最初の入力欄へフォーカス移動
+      wordForm.reset();
+      if (wordInput) wordInput.focus();
+    });
+  }
 
   // 2. リアルタイム検索処理（言葉・読み・メモ・タグから一括検索）
   if (searchInput) {
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wordList.innerHTML = '';
 
     if (list.length === 0) {
-      wordList.innerHTML = '<p style="text-align: center; color: var(--accent-sage); padding: 20px;">該当する言葉が見つかりませんでした 🎣</p>';
+      wordList.innerHTML = '<p style="text-align: center; color: var(--accent-sage); padding: 20px;">言葉が見つかりませんでした 🐠</p>';
       return;
     }
 
@@ -117,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 削除機能をグローバルに登録
   window.deleteWord = function(id) {
-    if (confirm('この釣果を削除してもよろしいですか？')) {
+    if (confirm('この言葉を削除してもよろしいですか？')) {
       words = words.filter(item => item.id !== id);
       saveAndRender();
     }
