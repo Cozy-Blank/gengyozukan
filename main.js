@@ -24,15 +24,24 @@ function hiraToKata(str) {
   });
 }
 
-// 1. タグ追加処理
+// 1. タグ追加処理（カンマや読点で自動分割！）
 function addTag() {
   if (!tagInput) return;
-  const tagText = tagInput.value.trim();
-  if (tagText && !currentTags.includes(tagText)) {
-    currentTags.push(tagText);
-    renderInputTags();
-    tagInput.value = '';
-  }
+  const rawText = tagInput.value.trim();
+  if (!rawText) return;
+
+  // カンマ(,)や読点(、)やスペースで分割
+  const splitTags = rawText.split(/[,、\s]+/);
+
+  splitTags.forEach(tagText => {
+    const cleanTag = tagText.trim();
+    if (cleanTag && !currentTags.includes(cleanTag)) {
+      currentTags.push(cleanTag);
+    }
+  });
+
+  renderInputTags();
+  tagInput.value = '';
 }
 
 if (addTagBtn) {
@@ -123,7 +132,12 @@ function updateFilterTags() {
   const allTags = new Set();
   words.forEach(item => {
     if (item.tags && Array.isArray(item.tags)) {
-      item.tags.forEach(tag => allTags.add(tag));
+      item.tags.forEach(tag => {
+        // カンマが混ざって保存された古いデータも分解して綺麗に表示
+        tag.split(/[,、\s]+/).forEach(t => {
+          if (t.trim()) allTags.add(t.trim());
+        });
+      });
     }
   });
 
@@ -154,29 +168,33 @@ function updateFilterTags() {
   });
 }
 
-// 4. 言葉カードの描画（ひらがな・カタカナ両対応のうろ覚え検索）
+// 4. 言葉カードの描画
 function renderWords() {
   if (!wordListContainer) return;
   wordListContainer.innerHTML = '';
   const keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
-  const kataKeyword = hiraToKata(keyword); // ひらがなをカタカナに変換した検索ワード
+  const kataKeyword = hiraToKata(keyword);
 
   const filteredWords = words.filter(item => {
     const wordStr = (item.word || '').toLowerCase();
     const readingStr = (item.reading || '').toLowerCase();
     const meaningStr = (item.meaning || '').toLowerCase();
 
-    // 言葉・読み・意味・タグの中でヒットするかチェック（ひらがな/カタカナ両対応）
+    // タグの中にマッチするか（カンマ区切りデータも分解して判定）
+    const matchesTagKeyword = item.tags && item.tags.some(t => {
+      const tStr = t.toLowerCase();
+      return tStr.includes(keyword) || tStr.includes(kataKeyword);
+    });
+
     const matchesKeyword = !keyword || 
       wordStr.includes(keyword) || wordStr.includes(kataKeyword) ||
       readingStr.includes(keyword) || readingStr.includes(kataKeyword) ||
       meaningStr.includes(keyword) || meaningStr.includes(kataKeyword) ||
-      (item.tags && item.tags.some(t => {
-        const tStr = t.toLowerCase();
-        return tStr.includes(keyword) || tStr.includes(kataKeyword);
-      }));
+      matchesTagKeyword;
     
-    const matchesTagFilter = activeFilterTag === 'all' || (item.tags && item.tags.includes(activeFilterTag));
+    // タグボタンによる絞り込み（古いカンマ結合データにも柔軟に対応）
+    const matchesTagFilter = activeFilterTag === 'all' || 
+      (item.tags && item.tags.some(t => t.split(/[,、\s]+/).includes(activeFilterTag)));
 
     return matchesKeyword && matchesTagFilter;
   });
@@ -191,9 +209,17 @@ function renderWords() {
     card.className = 'input-form';
     card.style.position = 'relative';
 
-    const tagsHtml = (item.tags && item.tags.length > 0)
-      ? item.tags.map(t => `<span class="tag">${t}</span>`).join(' ')
-      : '';
+    // カンマ区切りのタグも綺麗に個別のタグタグとして展開
+    let displayTags = [];
+    if (item.tags && item.tags.length > 0) {
+      item.tags.forEach(t => {
+        t.split(/[,、\s]+/).forEach(subT => {
+          if (subT.trim()) displayTags.push(subT.trim());
+        });
+      });
+    }
+
+    const tagsHtml = displayTags.map(t => `<span class="tag">${t}</span>`).join(' ');
       
     const linkHtml = item.link 
       ? `<p style="margin:6px 0;"><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color:var(--accent-terra); font-weight:bold; text-decoration:underline;">🔗 参照リンクを見る</a></p>` 
