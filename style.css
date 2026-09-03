@@ -154,3 +154,48 @@ button:hover {
 .floating-save-btn:active {
   transform: scale(0.92);
 }
+/* ==========================================
+   入力欄（input / textarea）の文字色修正
+   ========================================== */
+input[type="text"],
+input[type="url"],
+textarea {
+  color: #1A2421 !important;           /* 入力中の文字をくっきり濃い色に */
+  background-color: #F7F5F0 !important; /* 背景色も明るく読みやすく */
+  border: 1px solid var(--border-color);
+}
+
+/* 入力欄のプレースホルダー（うっすら表示される文字）の色 */
+input::placeholder,
+textarea::placeholder {
+  color: #8A9A86;
+  opacity: 0.8;
+}
+
+/* ==========================================
+   ポップで誰もがわかる！一発保存ボタン
+   ========================================== */
+.floating-save-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 30px; /* 丸みのあるポップなカプセル型 */
+  background: linear-gradient(135deg, #FF7B54, #FFB26B); /* ポップで目立つ暖色グラデーション */
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.floating-save-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
