@@ -3,13 +3,13 @@
 }
 
 :root {
-  --bg-color: #0A131C;       /* マリアナ海溝の深紺 */
-  --card-bg: #132232;      /* 深海カプセルのダークブルー */
-  --accent-green: #50C8C6;  /* 氷のように澄んだアイスグリーン */
-  --accent-sage: #7B9BBA;   /* クリアなパウダーブルー */
+  --bg-color: #0B131D;       /* 深い深海の紺黒 */
+  --card-bg: #142232;      /* カード全体のダークブルー */
+  --accent-green: #3B9A9C;  /* シックなターコイズ */
+  --accent-sage: #8A9A86;   /* 水中に溶け込むスモーキーグリーン */
   --accent-terra: #FF6B4A;  /* 保存ボタンのポップオレンジ */
-  --text-main: #EAF4F4;     /* 澄み切った月光ホワイト */
-  --border-color: #1E374E;  /* 透明感のあるネイビー枠線 */
+  --text-main: #E2ECE9;     /* 月光のようなやわらかい白文字 */
+  --border-color: #1E334A;  /* 落ち着いた枠線 */
 }
 
 body {
@@ -24,7 +24,7 @@ body {
 }
 
 /* ==========================================
-   ヘッダー（イラスト枠のコンパクト化＆中央寄せ）
+   ヘッダー（イラスト＆タイトル）
    ========================================== */
 header {
   text-align: center;
@@ -65,7 +65,7 @@ header {
   text-align: center;
 }
 
-.section-title {
+.section-title, .list-title {
   font-size: 1.2rem;
   color: var(--text-main);
   margin-bottom: 16px;
@@ -75,7 +75,7 @@ header {
 }
 
 /* ==========================================
-   入力フォーム（横幅いっぱいにゆったり配置）
+   入力フォーム＆検索窓（ゆったり中央配置）
    ========================================== */
 .form-section, .search-section {
   width: 100%;
@@ -87,7 +87,6 @@ header {
   width: 100%;
 }
 
-/* 入力欄（input / textarea）のスタイルを一括修正 */
 input[type="text"],
 input[type="url"],
 textarea {
@@ -100,43 +99,6 @@ textarea {
   background-color: #F7F5F0 !important;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  margin-top: 4px;
-}
-/* ==========================================
-   クーラーbox検索エリア（ひんやり＆すっきり）
-   ========================================== */
-.search-section {
-  width: 100%;
-  margin-bottom: 24px;
-}
-
-#search-input {
-  width: 100% !important;
-  box-sizing: border-box !important;
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  color: #1A2421 !important;
-  background-color: #EBF5F8 !important; /* ひんやり感のある薄い氷色 */
-  border: 1px solid var(--accent-green);
-  border-radius: 20px; /* カプセル風のやわらかい丸み */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し凹んだクーラーbox感 */
-}
-
-#search-input::placeholder {
-  color: #5A7882; /* 読みやすい氷青色の文字 */
-}
-/* 「釣果を記録する」ボタン */
-.save-btn {
-  width: 100% !important;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  background-color: var(--accent-green);
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
 }
 
 /* ==========================================

@@ -12,13 +12,14 @@
     <!-- ヘッダーエリア -->
     <header>
       <div class="header-image-container">
-        <img src="top-image.png" alt="釣っとこどんどん 偏愛Tool" class="header-img">
+        <!-- ※実際の画像ファイル名に合わせて src を書き換えてね！ -->
+        <img src="" alt="魚言図鑑" class="header-img">
       </div>
-      <h1 class="main-title">言魚図鑑</h1>
-      <p class="subtitle">〜 釣った言葉を嗜むノート 〜</p>
+      <h1 class="main偏愛魚.png-title">魚言図鑑</h1>
+      <p class="subtitle">〜 釣った言葉を嗜む言葉ノート 〜</p>
     </header>
 
-    <!-- 入力フォームエリア（保存ボタンは右下ボタンに集約） -->
+    <!-- 入力フォームエリア -->
     <section class="form-section">
       <h2 class="section-title">言葉を釣る（新規登録）</h2>
       <form id="word-form">
@@ -42,7 +43,7 @@
           <input type="text" id="tag-input" placeholder="タグ（カンマ区切りで複数入力OK）">
         </div>
 
-        <!-- JSからの送信イベント用（隠し送信ボタン） -->
+        <!-- 保存ボタン（右下ボタンから実行） -->
         <button type="submit" id="save-btn" style="display: none;"></button>
       </form>
     </section>
@@ -52,11 +53,13 @@
       <input type="text" id="search-input" placeholder="🔍 言葉・読み・メモ・タグから探す...">
     </section>
 
-    <!-- 記録一覧表示エリア（洗練されたタイトル表現） -->
-   <!-- 検索エリア -->
-<section class="search-section">
-  <input type="text" id="search-input" placeholder="🧊 クーラーboxを開ける...">
-</section>
+    <!-- 記録一覧表示エリア（タイトルをクーラーboxに変更！） -->
+    <section class="list-section">
+      <h2 class="list-title">🧊 クーラーboxを開ける</h2>
+      <div id="word-list" class="word-list">
+        <!-- JSでここにカードが追加されます -->
+      </div>
+    </section>
   </div>
 
   <!-- スマホ向け一発保存ボタン -->
