@@ -1,7 +1,7 @@
-
 * {
   box-sizing: border-box;
 }
+
 :root {
   --bg-color: #0B131D;       /* 深い深海の紺黒 */
   --card-bg: #142232;      /* カード全体のダークブルー */
@@ -11,6 +11,7 @@
   --text-main: #E2ECE9;     /* 月光のようなやわらかい白文字 */
   --border-color: #1E334A;  /* 落ち着いた枠線 */
 }
+
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
@@ -22,25 +23,21 @@ body {
   margin-right: auto;
 }
 
-.henai-/* ==========================================
-   ヘッダー（画像と重厚感あるタイトル）
-   ========================================== */
 /* ==========================================
    ヘッダー（イラスト枠のコンパクト化＆中央寄せ）
    ========================================== */
 header {
-  text-align: center; /* 全体を真ん中寄せ */
+  text-align: center;
   margin-bottom: 20px;
 }
 
-/* イラストを囲む白いカード枠 */
 .header-image-container {
   background: #FFFFFF;
-  padding: 4px 8px; /* パディングを小さくして縦幅を抑える */
+  padding: 4px 8px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  max-width: 320px; /* 横幅も少しコンパクトに */
-  margin: 0 auto 16px auto; /* 中央配置 */
+  max-width: 320px;
+  margin: 0 auto 16px auto;
   display: block;
 }
 
@@ -51,23 +48,21 @@ header {
   border-radius: 6px;
 }
 
-/* タイトル「魚言図鑑」（文字サイズ小さめ＆中央寄せ） */
 .main-title {
-  font-size: 1.6rem; /* サイズを控えめに調整 */
+  font-size: 1.6rem;
   font-weight: bold;
   color: var(--text-main);
   letter-spacing: 2px;
   margin: 0 auto 6px auto;
-  text-align: center; /* 確実に真ん中配置 */
+  text-align: center;
 }
 
-/* サブタイトル（中央寄せ） */
 .subtitle {
   font-size: 0.85rem;
   color: var(--accent-sage);
   letter-spacing: 1px;
   margin: 0 auto 20px auto;
-  text-align: center; /* 確実に真ん中配置 */
+  text-align: center;
 }
 
 .section-title {
@@ -80,6 +75,49 @@ header {
 }
 
 /* ==========================================
+   入力フォーム（横幅いっぱいにゆったり配置）
+   ========================================== */
+.form-section, .search-section {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+/* 入力欄（input / textarea）のスタイルを一括修正 */
+input[type="text"],
+input[type="url"],
+textarea {
+  width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: #1A2421 !important;
+  background-color: #F7F5F0 !important;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+/* 「釣果を記録する」ボタン */
+.save-btn {
+  width: 100% !important;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--accent-green);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ==========================================
    丸枠にすっぽり収まる！一発「保存」ボタン
    ========================================== */
 .floating-save-btn {
@@ -88,8 +126,8 @@ header {
   right: 20px;
   width: 60px;
   height: 60px;
-  border-radius: 50%; /* 完全な正円 */
-  background: linear-gradient(135deg, #FF7B54, #FF5722); /* サンゴ感のあるはっきりした暖色 */
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF7B54, #FF5722);
   color: #FFFFFF !important;
   font-size: 1rem;
   font-weight: 800;
