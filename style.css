@@ -1,11 +1,11 @@
 :root {
-  --bg-color: #E8E1D5;       /* 経年変化したペーパー色 */
-  --card-bg: #F5F0E6;      /* アイボリー */
-  --accent-green: #4A3B32;  /* ダークウッドのブラウン */
-  --accent-sage: #9E9382;   /* クラシックグレージュ */
-  --accent-terra: #B86B3A;  /* アンティークブラス（真鍮色） */
-  --text-main: #241E1A;     /* セピアブラック */
-  --border-color: #BDB2A1;  /* 真鍮調の枠線 */
+  --bg-color: #0D1B1E;       /* 苔むした海底洞窟のダークグリーン */
+  --card-bg: #182A2F;      /* 落ち着いたディープティール */
+  --accent-green: #64C4B1;  /* 明るいマリンミント */
+  --accent-sage: #7B9B97;   /* 淡い深海水域のセージ */
+  --accent-terra: #D97757;  /* アクセントになる渋めのコーラルレッド */
+  --text-main: #E8F1F0;     /* 澄んだ水中を思わせるペールアクア */
+  --border-color: #28444A;  /* 深緑系の柔らかな枠線 */
 }
 
 * {
