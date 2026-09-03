@@ -9,17 +9,16 @@
 <body>
 
   <div class="container">
-    <!-- ヘッダーエリア（画像とタイトル） -->
+    <!-- ヘッダーエリア -->
     <header>
       <div class="header-image-container">
-        <!-- 画像ファイル名が異なる場合は、src="〇〇.jpg" の部分をお手元の画像ファイル名に合わせて変更してください -->
-        <img src="偏愛魚.png" alt="釣っとこどんどん 偏愛Tool" class="header-img">
+        <img src="top-image.png" alt="釣っとこどんどん 偏愛Tool" class="header-img">
       </div>
-      <h1 class="main-title">魚言図鑑</h1>
-      <p class="subtitle">〜 釣った言葉を嗜む言葉ノート 〜</p>
+      <h1 class="main-title">言魚図鑑</h1>
+      <p class="subtitle">〜 釣った言葉を嗜むノート 〜</p>
     </header>
 
-    <!-- 入力フォームエリア -->
+    <!-- 入力フォームエリア（保存ボタンは右下ボタンに集約） -->
     <section class="form-section">
       <h2 class="section-title">言葉を釣る（新規登録）</h2>
       <form id="word-form">
@@ -43,7 +42,8 @@
           <input type="text" id="tag-input" placeholder="タグ（カンマ区切りで複数入力OK）">
         </div>
 
-        <button type="submit" id="save-btn" class="save-btn">釣果を記録する</button>
+        <!-- JSからの送信イベント用（隠し送信ボタン） -->
+        <button type="submit" id="save-btn" style="display: none;"></button>
       </form>
     </section>
 
@@ -52,16 +52,14 @@
       <input type="text" id="search-input" placeholder="🔍 言葉・読み・メモ・タグから探す...">
     </section>
 
-    <!-- 記録一覧表示エリア -->
-    <section class="list-section">
-      <h2>🎣 これまでの釣果一覧</h2>
-      <div id="word-list" class="word-list">
-        <!-- JSでここにカードが追加されます -->
-      </div>
-    </section>
+    <!-- 記録一覧表示エリア（洗練されたタイトル表現） -->
+   <!-- 検索エリア -->
+<section class="search-section">
+  <input type="text" id="search-input" placeholder="🧊 クーラーboxを開ける...">
+</section>
   </div>
 
-  <!-- スマホ向け一発保存ボタン（綺麗な丸型・「保存」表示） -->
+  <!-- スマホ向け一発保存ボタン -->
   <button type="button" class="floating-save-btn" onclick="document.getElementById('save-btn').click()">
     保存
   </button>

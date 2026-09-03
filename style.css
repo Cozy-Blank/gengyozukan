@@ -3,13 +3,13 @@
 }
 
 :root {
-  --bg-color: #0B131D;       /* 深い深海の紺黒 */
-  --card-bg: #142232;      /* カード全体のダークブルー */
-  --accent-green: #3B9A9C;  /* シックなターコイズ */
-  --accent-sage: #8A9A86;   /* 水中に溶け込むスモーキーグリーン */
-  --accent-terra: #FF6B4A;  /* 保存ボタンがくっきり映えるポップオレンジ */
-  --text-main: #E2ECE9;     /* 月光のようなやわらかい白文字 */
-  --border-color: #1E334A;  /* 落ち着いた枠線 */
+  --bg-color: #0A131C;       /* マリアナ海溝の深紺 */
+  --card-bg: #132232;      /* 深海カプセルのダークブルー */
+  --accent-green: #50C8C6;  /* 氷のように澄んだアイスグリーン */
+  --accent-sage: #7B9BBA;   /* クリアなパウダーブルー */
+  --accent-terra: #FF6B4A;  /* 保存ボタンのポップオレンジ */
+  --text-main: #EAF4F4;     /* 澄み切った月光ホワイト */
+  --border-color: #1E374E;  /* 透明感のあるネイビー枠線 */
 }
 
 body {
@@ -102,7 +102,29 @@ textarea {
   border-radius: 8px;
   margin-top: 4px;
 }
+/* ==========================================
+   クーラーbox検索エリア（ひんやり＆すっきり）
+   ========================================== */
+.search-section {
+  width: 100%;
+  margin-bottom: 24px;
+}
 
+#search-input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #1A2421 !important;
+  background-color: #EBF5F8 !important; /* ひんやり感のある薄い氷色 */
+  border: 1px solid var(--accent-green);
+  border-radius: 20px; /* カプセル風のやわらかい丸み */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し凹んだクーラーbox感 */
+}
+
+#search-input::placeholder {
+  color: #5A7882; /* 読みやすい氷青色の文字 */
+}
 /* 「釣果を記録する」ボタン */
 .save-btn {
   width: 100% !important;
