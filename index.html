@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>言魚図鑑</title>
+
+  <!-- OGP設定（LINEやSNSで共有した時の表示） -->
+  <meta property="og:title" content="言魚図鑑">
+  <meta property="og:description" content="〜 釣った言葉を嗜むノート 〜">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="gengyo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="gengyo.png">
+
+  <!-- スマホのホーム画面追加（PWA）＆ファビコン設定 -->
+  <link rel="icon" href="gengyo.png">
+  <link rel="apple-touch-icon" href="gengyo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1c2638">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +27,6 @@
     <!-- ヘッダーエリア -->
     <header>
       <div class="header-image-container">
-        <!-- 画像ファイルをプロジェクト内に置いたので、ファイル名だけでOK！ -->
         <img src="fish.png" alt="言魚図鑑" class="header-img">
       </div>
       <h1 class="main-title">言魚図鑑</h1>
@@ -39,12 +53,12 @@
           <input type="url" id="url-input" placeholder="参照リンクURL">
         </div>
 
-        <!-- 保存ボタン（右下ボタンから実行） -->
+        <!-- 保存ボタン -->
         <button type="submit" id="save-btn" style="display: none;"></button>
       </form>
     </section>
 
-    <!-- 検索エリア（タグを削除してすっきり変更！） -->
+    <!-- 検索エリア -->
     <section class="search-section">
       <input type="text" id="search-input" placeholder="🔍 言葉・読み・メモから探す...">
     </section>
@@ -59,7 +73,7 @@
   </div>
 
   <!-- スマホ向け一発保存ボタン -->
-  <button type="button" class="floating-save-btn" onclick="document.getElementById('save-btn').click()">
+  <button type="button" class="floating-save-btn" aria-label="釣った言葉を保存する" onclick="document.getElementById('save-btn').click()">
     保存
   </button>
 
