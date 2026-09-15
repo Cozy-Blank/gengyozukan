@@ -2,23 +2,21 @@
   box-sizing: border-box;
 }
 
+/* ==========================================
+   カラー変数定義（深海・クールスタイル）
+   ========================================== */
 :root {
-  --bg-color: #0A121A;       /* 深い水底を思わせる濃紺 */
-  --card-bg: #132232;      /* 水滴のように静かなディープアクア */
-  --accent-green: #3EC1AD;  /* 発光する水草のようなブライトエメラルド */
-  --accent-sage: #7B9BB4;   /* 水中に消えていきそうな淡いスレート */
-  --accent-terra: #FF6B52;  /* スマホ保存ボタンに映える鮮やかなコーラル */
-  --text-main: #EAF4F4;     /* クリアな水面から届く光の白 */
-  --border-color: #1E354D;  /* 繊細なガラス枠線 */
+  --bg-color: #0B132B;       /* 深海の深遠なミッドナイトブルー */
+  --card-bg: #1C2541;      /* 透明感のある水中アクアブラック */
+  --accent-cyan: #4CC9F0;   /* 深海でほのかに光るネオンシアン */
+  --accent-sage: #8D99AE;   /* 静かな水草のスレートグレー */
+  --accent-orange: #FF6B6B; /* アクセントになる熱帯魚コーラル */
+  --text-main: #EDF2F4;     /* 視認性の高いクリアホワイト */
+  --border-color: #3A506B;  /* 深海に溶け込むガラス枠線 */
 }
 
-body {<!-- アイコン設定（スマホ・ブラウザ用） -->
-  <link rel="icon" href="./gengyo.png" type="image/png">
-  <link rel="apple-touch-icon" href="./gengyo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="./gengyo.png">
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1a2636">
-  background-color: var(--bg-color);
+body {
+  background-color: var(--bg-color) !important;
   color: var(--text-main);
   font-family: "Georgia", "Yu Mincho", "游明朝", serif;
   margin: 0;
@@ -33,16 +31,16 @@ body {<!-- アイコン設定（スマホ・ブラウザ用） -->
    ========================================== */
 header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .header-image-container {
   background: #FFFFFF;
-  padding: 4px 8px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 6px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   max-width: 320px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 20px auto;
   display: block;
 }
 
@@ -50,23 +48,24 @@ header {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 .main-title {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: var(--text-main);
-  letter-spacing: 2px;
-  margin: 0 auto 6px auto;
+  color: var(--accent-cyan);
+  letter-spacing: 3px;
+  margin: 0 auto 8px auto;
   text-align: center;
+  text-shadow: 0 0 12px rgba(76, 201, 240, 0.4);
 }
 
 .subtitle {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--accent-sage);
-  letter-spacing: 1px;
-  margin: 0 auto 20px auto;
+  letter-spacing: 1.5px;
+  margin: 0 auto 24px auto;
   text-align: center;
 }
 
@@ -80,15 +79,15 @@ header {
 }
 
 /* ==========================================
-   入力フォーム＆検索窓（ゆったり中央配置）
+   入力フォーム＆検索エリア
    ========================================== */
 .form-section, .search-section {
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .form-group {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   width: 100%;
 }
 
@@ -98,40 +97,54 @@ textarea {
   width: 100% !important;
   display: block !important;
   box-sizing: border-box !important;
-  padding: 12px 14px;
-  font-size: 1rem;
-  color: #1A2421 !important;
-  background-color: #F7F5F0 !important;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  color: #FFFFFF !important;
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]::placeholder,
+input[type="url"]::placeholder,
+textarea::placeholder {
+  color: #6C7A89;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 8px rgba(76, 201, 240, 0.3);
 }
 
 /* ==========================================
-   丸枠にすっぽり収まる！一発「保存」ボタン
+   フローティング保存ボタン
    ========================================== */
 .floating-save-btn {
   position: fixed;
   bottom: 24px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FF7B54, #FF5722);
+  background: linear-gradient(135deg, #FF6B6B, #EE5253);
   color: #FFFFFF !important;
   font-size: 1rem;
   font-weight: 800;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .floating-save-btn:active {
-  transform: scale(0.90);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(0.92);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
