@@ -1,0 +1,17 @@
+{
+  "name": "言魚図鑑",
+  "short_name": "言魚図鑑",
+  "description": "〜 釣った言葉を嗜むノート 〜",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0B132B",
+  "theme_color": "#0B132B",
+  "icons": [
+    {
+      "src": "./gengyo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
