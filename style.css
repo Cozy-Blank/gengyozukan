@@ -12,7 +12,12 @@
   --border-color: #1E354D;  /* 繊細なガラス枠線 */
 }
 
-body {
+body {<!-- アイコン設定（スマホ・ブラウザ用） -->
+  <link rel="icon" href="./gengyo.png" type="image/png">
+  <link rel="apple-touch-icon" href="./gengyo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./gengyo.png">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#1a2636">
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: "Georgia", "Yu Mincho", "游明朝", serif;
